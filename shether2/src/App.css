@@ -41,7 +41,7 @@
 }
 
 .cards div div:nth-child(even) div button div {
-  background-size: 170px;
+  background-size: 100px;
 }
 
 .card-unit button {
