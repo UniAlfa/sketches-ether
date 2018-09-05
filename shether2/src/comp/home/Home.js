@@ -9,14 +9,14 @@ class HomePage extends React.Component {
             <React.Fragment>
                 <CssBaseline />
                 <Paper>
-                    <Typography variant="display1" align="center">
+                    <Typography variant="headline" align="center" style={{"paddingTop": "1rem"}}>
                         Стартовая страница
                     </Typography>
                     <React.Fragment>
-                        <Typography variant="headline" gutterBottom>
+                        <Typography variant="subheading" gutterBottom style={{"textAlign": "center", "paddingTop": "2rem"}}>
                             Sketch 'sbrhether2' (v05.09.2018) is up and running
                         </Typography>
-                        <Typography variant="subheading">
+                        <Typography variant="subheading" style={{"textAlign": "center", "paddingBottom": "1rem"}}>
                             Ссылки меню активны
                         </Typography>
                     </React.Fragment>

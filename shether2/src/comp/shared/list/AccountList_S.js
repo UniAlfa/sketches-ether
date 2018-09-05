@@ -180,6 +180,7 @@ export class AccountList extends React.Component<> {
                 </Table>
                 </div>
                 <TablePagination
+                    style={{"backgroundColor":"#ececec"}}
                     component="div"
                     count={this.state.data.length}
                     rowsPerPage={this.state.rowsPerPage}

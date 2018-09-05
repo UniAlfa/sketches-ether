@@ -80,7 +80,7 @@ export class AccountListPage extends React.Component {
           </Grid>
         </div>
         
-        <Typography variant="headline" align="center" style={{"padding-top": "1rem"}}>
+        <Typography variant="headline" align="center" style={{"paddingTop": "1rem"}}>
           Список счетов
         </Typography>
 
