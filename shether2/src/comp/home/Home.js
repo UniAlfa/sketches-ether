@@ -14,7 +14,7 @@ class HomePage extends React.Component {
                     </Typography>
                     <React.Fragment>
                         <Typography variant="headline" gutterBottom>
-                            Sketch 'sbrhether2' (v03.09.2018) is up and running
+                            Sketch 'sbrhether2' (v05.09.2018) is up and running
                         </Typography>
                         <Typography variant="subheading">
                             Ссылки меню активны
