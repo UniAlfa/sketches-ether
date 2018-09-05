@@ -47,45 +47,50 @@ export class AccountListPage extends React.Component {
   render() {
     return (
       <div>
-        <div className="cards">
-          <Grid container spacing={24} style={{ justifyContent: "center" }}>
-            <Grid item xs={8} sm={4}>
-              <InfoCard
-                count={5000}
-                imageUrl={"/images/card-members.jpg"}
-                title={"Участников форума"}
-                cardStyle={{ backgroundColor: "#f6ebcd" }}
-              />
-            </Grid>
-            <Grid item xs={8} sm={4}>
-              <InfoCard
-                count={this.state.walCount}
-                imageUrl="images/card-etherium.jpg"
-                title={"Кошельков Ethereum"}
-                cardStyle={{
-                  backgroundColor: "#cbc2d2",
-                  backgroundSize: "50%"
-                }}
-              />
-            </Grid>
+        <div className="cards-container">
+          <div className="cards">
+            <Grid container spacing={24} style={{ justifyContent: "center" }}>
+              <Grid item xs={8} sm={4}>
+                <InfoCard
+                  count={5000}
+                  imageUrl={"/images/card-members.jpg"}
+                  title={"Участников форума"}
+                  cardStyle={{ backgroundColor: "#f6ebcd" }}
+                />
+              </Grid>
+              <Grid item xs={8} sm={4}>
+                <InfoCard
+                  count={this.state.walCount}
+                  imageUrl="images/card-etherium.jpg"
+                  title={"Кошельков Ethereum"}
+                  cardStyle={{
+                    backgroundColor: "#cbc2d2",
+                    backgroundSize: "50%"
+                  }}
+                />
+              </Grid>
 
-            <Grid item xs={8} sm={4}>
-              <InfoCard
-                count={500}
-                imageUrl="/images/card-books.jpg"
-                title={"Книг в магазинах Сбербанка"}
-                cardStyle={{ backgroundColor: "#a1dce4" }}
-              />
+              <Grid item xs={8} sm={4}>
+                <InfoCard
+                  count={500}
+                  imageUrl="/images/card-books.jpg"
+                  title={"Книг в магазинах Сбербанка"}
+                  cardStyle={{ backgroundColor: "#a1dce4" }}
+                />
+              </Grid>
             </Grid>
-          </Grid>
+          </div>
         </div>
-        
-        <Typography variant="headline" align="center" style={{"paddingTop": "1rem"}}>
+
+        <Typography
+          variant="headline"
+          align="center"
+          style={{ paddingTop: "1rem" }}
+        >
           Список счетов
         </Typography>
 
         <AccountList mode={"short"} />
-
       </div>
     );
   }

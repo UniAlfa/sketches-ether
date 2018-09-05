@@ -21,12 +21,17 @@
   background-color: #fff;
 }
 
+.cards-container {
+  background-color: #8b93b3;
+  padding: 0.1rem;
+}
+
 .cards {
   display: flex;
   align-content: center;
   justify-content: space-between;
   max-width: 900px;
-  margin: 2rem auto;
+  margin: 1.5rem auto;
 }
 
 .card-unit {

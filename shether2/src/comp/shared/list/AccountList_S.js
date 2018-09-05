@@ -141,7 +141,7 @@ export class AccountList extends React.Component<> {
                 style={{
                     width: "92%",
                     margin: "auto",
-                    marginTop: "2rem",
+                    marginTop: "1rem",
                     marginBottom: "2rem"
                 }}
             >
