@@ -1,0 +1,40 @@
+
+.sketch-list {
+    width: 100%;
+    max-width: 360em;
+    background: white;
+}
+
+.sketch-paper {
+    width: 100%;
+    margin-top: 3px;
+    overflow-x: auto;
+}
+
+.sketch-table {
+    min-width: 700px;
+}
+
+
+.sketch-row:nth-of-type(odd) {
+    background: gray;
+}
+
+.sketch-th {
+    background-color: #3eac51;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.sketch-tbody {
+    font-size: 14px;
+}
+
+.sketch-card {
+    max-width: 500px;
+}
+
+.sketch-media {
+    height: 260px;
+}

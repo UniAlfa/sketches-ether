@@ -1,0 +1,29 @@
+.list {
+    width: 100%;
+    max-width: 360em;
+    background: white;
+}
+
+.paper {
+     width: 100%;
+     margin-top: 3px;
+     overflow-x: auto;
+ }
+
+.table {
+    min-width: 700px;
+}
+
+
+.row:nth-of-type(odd) {
+    background: gray;
+}
+
+.th {
+    background-color: #3eac51;
+    color: white;
+}
+
+.tbody {
+    font-size: 14px;
+}
