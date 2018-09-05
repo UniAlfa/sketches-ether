@@ -69,11 +69,12 @@ export class ManageAccountsPage extends React.Component {
     render() {
         return (
             <div>
-                <Typography variant="subheading" align="center" >
+                <Typography variant="headline" align="center" style={{"padding-top": "1rem"}}>
                     Страница администратора
                 </Typography>
 
                 <div><NewAccountDlg handleCreate={this.createWallet}/></div>
+                
                 <AccountList mode={'admin'} lastUpdate={this.state.lastUpdate}/>
             </div>
         );

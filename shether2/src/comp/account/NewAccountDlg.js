@@ -50,9 +50,10 @@ export class NewAccountDlg extends React.Component {
 
     render() {
         return (
-            <div>
-                <Button variant="outlined" color="primary" onClick={this.handleOpen}>
-                    <AddIcon />
+            <div className="btn-pane">
+            
+                <Button variant="outlined" onClick={this.handleOpen}>
+                    {/* <AddIcon /> */}
                     Создать кошелек
                 </Button>
 
