@@ -1,4 +1,5 @@
 import React from 'react';
+import AuthProcess from '../shared/auth/AuthProcess';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -11,6 +12,7 @@ import AndroidIcon from "@material-ui/icons/Android";
 import PeopleIcon from "@material-ui/icons/People";
 import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 
+const Auth = new AuthProcess();
 
 const styles = theme => ({
     list: {
@@ -77,12 +79,14 @@ class SideMenuBar extends React.Component {
                             <ListItemText primary="Список счетов" />
                         </ListItem>
 
+                        {Auth.cani('manage') ?
                         <ListItem button component="a" href="/admin">
                             <ListItemIcon>
                                 <AndroidIcon />
                             </ListItemIcon>
                             <ListItemText primary="Страница администратора" />
                         </ListItem>
+                            : undefined}
                     </List>
                 </div>
 

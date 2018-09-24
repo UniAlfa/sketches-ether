@@ -5,16 +5,24 @@ import {shconfig} from "../../config";
 import * as ethers from "ethers";
 import moment from "moment";
 import Typography from "@material-ui/core/Typography/Typography";
+import AuthProcess from "../shared/auth/AuthProcess";
+import {HandleReviewDlg} from "./HandleReviewDlg";
+
+
+const Auth = new AuthProcess();
 
 export class ManageAccountsPage extends React.Component {
     constructor(props, context) {
         super(props, context);
 
         this.createWallet = this.createWallet.bind(this);
-        this.state = {lastUpdate: 0}
+        this.handleReview = this.handleReview.bind(this);
+        this.handleDecision = this.handleDecision.bind(this);
+        this.state = {lastUpdate: 0, managedAccount: undefined}
     }
 
     createWallet(newWallet): Promise {
+
         let _that = this;
         if (newWallet) {
 
@@ -22,8 +30,6 @@ export class ManageAccountsPage extends React.Component {
 
             return new Promise(function (resolve, reject) {
                 ethers.Wallet.fromBrainWallet(newWallet.username, newWallet.password).then(function(wallet) {
-                    console.log('given address');
-                    console.log(wallet.address);
 
                     provider.getBalance(wallet.address).then(function(balance) {
                         //const etherString = ethers.utils.formatEther(balance);
@@ -37,12 +43,8 @@ export class ManageAccountsPage extends React.Component {
                             balance: savedBalance
                         };
 
-                        fetch(shconfig.mongo_api_accounts_crud_url, {
+                        Auth.fetch(shconfig.mongo_api_accounts_crud_url, {
                             method: 'POST',
-                            headers: {
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json'
-                            },
                             body: JSON.stringify( account )
                         })
                             .then(response => {
@@ -66,6 +68,38 @@ export class ManageAccountsPage extends React.Component {
         }
     };
 
+    handleDecision(account, decision): Promise {
+        console.log('handleDecision 2');
+        let _that = this;
+        if (account) {
+            return new Promise(function (resolve, reject) {
+                let aprdec = {username: account.username, decision: decision};
+
+                Auth.fetch(shconfig.data_rest_api_approval, {
+                    method: 'POST',
+                    body: JSON.stringify(aprdec)
+                })
+                    .then(response => {
+                        _that.setState({lastUpdate: _that.state.lastUpdate ? _that.state.lastUpdate + 1 : 0});
+                        return resolve(true);
+                        }
+                    )
+                    .catch(reason => {
+                        console.log(reason);
+                        reject(reason);
+                 });
+            });
+        }
+    }
+
+    handleReview(account) {
+        if (account) {
+            this.setState({managedAccount: account, opened: true});
+        }
+        else
+            this.setState({managedAccount: undefined, opened: false});
+    }
+
     render() {
         return (
             <div>
@@ -74,8 +108,9 @@ export class ManageAccountsPage extends React.Component {
                 </Typography>
 
                 <div><NewAccountDlg handleCreate={this.createWallet}/></div>
+                <div><HandleReviewDlg account={this.state.managedAccount} opened={this.state.opened} handleDecision={this.handleDecision}/></div>
 
-                <AccountList mode={'admin'} lastUpdate={this.state.lastUpdate}/>
+                <AccountList mode={'admin'} lastUpdate={this.state.lastUpdate} handleReview={this.handleReview}/>
             </div>
         );
     }

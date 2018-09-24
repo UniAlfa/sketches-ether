@@ -4,6 +4,7 @@ import { InfoCard } from "../shared/bits/InfoCard_D";
 import Typography from "@material-ui/core/Typography/Typography";
 import { shconfig } from "../../config";
 import Grid from "@material-ui/core/Grid/Grid";
+import Auth from "../shared/auth/AuthProcess";
 
 export class AccountListPage extends React.Component {
   constructor(props, context) {
@@ -24,7 +25,7 @@ export class AccountListPage extends React.Component {
     let _that = this;
     return new Promise(function(resolve, reject) {
       _that.setState({ processing: true });
-      fetch(shconfig.mongo_api_accounts_crud_url + "&c=true")
+      Auth.fetch(shconfig.mongo_api_accounts_crud_url + "&c=true")
         .then(response => {
           if (response.ok) {
             return response.text();

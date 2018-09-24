@@ -6,6 +6,7 @@ import Paper from "@material-ui/core/Paper/Paper";
 import TableHead from "@material-ui/core/TableHead/TableHead";
 import TableBody from "@material-ui/core/TableBody/TableBody";
 import {shconfig} from '../../../config'
+import AuthProcess from '../../shared/auth/AuthProcess';
 import {AccountRow} from './AccountRow_D'
 import LinearProgress from "@material-ui/core/LinearProgress/LinearProgress";
 import Tooltip from "@material-ui/core/Tooltip/Tooltip";
@@ -13,32 +14,32 @@ import TableSortLabel from "@material-ui/core/TableSortLabel/TableSortLabel";
 import TablePagination from "@material-ui/core/TablePagination/TablePagination";
 import SearchListToolbar from "./SearchListToolbar";
 
+const Auth = new AuthProcess();
+
 export class AccountList extends React.Component<> {
+
     constructor(props, context) {
         super(props, context);
 
         this.reloadAccountsState = this.reloadAccountsState.bind(this);
         this.filterArray= this.filterArray.bind(this);
+        this.handleReview= this.handleReview.bind(this);
         this.state = {data: [], processing:false, order: 'asc', orderBy: 'username', page: 0, rowsPerPage: 10, seacrhQ: ''};
     }
 
-    componentWillReceiveProps  (){
-        this.reloadAccountsState().then(accounts => this.setState({data: accounts, processing:false}));
+    componentWillReceiveProps  (nextProps){
+        if (this.props.lastUpdate != nextProps.lastUpdate)
+            this.reloadAccountsState().then(accounts => this.setState({data: accounts, processing:false}));
     }
 
     reloadAccountsState(): Promise {
         let _that = this;
         return new Promise(function (resolve, reject) {
             _that.setState({processing:true});
-            fetch(shconfig.mongo_api_accounts_crud_url)
-                .then(response => {
-                        if (response.ok) {
-                            return response.json();
-                        } else {
-                            let error = new Error(response.statusText);
-                            throw error;
-                        }
-                    }
+            Auth.fetch(shconfig.mongo_api_accounts_crud_url)
+                .then(response =>
+                    {
+                        return response.json();}
                 )
                 .then(accounts => {
                     return resolve(accounts);
@@ -112,13 +113,15 @@ export class AccountList extends React.Component<> {
             return 1;
         }
         return 0;
-    }
+    };
 
     handleSearch = (e) => {
         this.setState({searchQ : e.target.value});
+    };
 
-        console.log(this.state.searchQ );
-    }
+    handleReview = (account) => {
+        this.props.handleReview(account);
+    };
 
     render() {
 
@@ -127,7 +130,8 @@ export class AccountList extends React.Component<> {
             { id: 'username', numeric: false, disablePadding: false, label: 'Номер телефона' },
             { id: 'address', numeric: false, disablePadding: false, label: 'Адрес кошелька' },
             { id: 'balance', numeric: true, disablePadding: false, label: 'Текущий баланс' },
-            { id: 'created', numeric: false, disablePadding: false, label: 'Создан' }
+            { id: 'created', numeric: false, disablePadding: false, label: 'Создан' },
+            { id: 'action', numeric: false, disablePadding: false, label: 'Action' }
         ]
             : [
             { id: 'username', numeric: false, disablePadding: false, label: 'Номер телефона' },
@@ -170,8 +174,9 @@ export class AccountList extends React.Component<> {
                         {this.stableSort(this.filterArray(this.state.data, this.state.searchQ, this.props.mode), this.getSorting(this.state.order, this.state.orderBy))
                             .slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage)
                             .map(n => {
+                                let _hasaction = Auth.cani('approve', n);
                                 return (
-                                    <AccountRow key={n._id['$oid']} {...n} mode={this.props.mode}/>
+                                    <AccountRow key={n._id['$oid']} {...n} mode={this.props.mode} hasaction={_hasaction} handleReview={this.handleReview}/>
                                 );
                             })}
 

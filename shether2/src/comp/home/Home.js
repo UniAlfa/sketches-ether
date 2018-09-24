@@ -5,6 +5,7 @@ import Paper from "@material-ui/core/Paper/Paper";
 
 class HomePage extends React.Component {
     render() {
+
         return (
             <React.Fragment>
                 <CssBaseline />
@@ -14,7 +15,7 @@ class HomePage extends React.Component {
                     </Typography>
                     <React.Fragment>
                         <Typography variant="subheading" gutterBottom style={{"textAlign": "center", "paddingTop": "2rem"}}>
-                            Sketch 'sbrhether2' (v05.09.2018) is up and running
+                            Sketch 'sbrhether2' (v24.09.2018) is up and running
                         </Typography>
                         <Typography variant="subheading" style={{"textAlign": "center", "paddingBottom": "1rem"}}>
                             Ссылки меню активны
