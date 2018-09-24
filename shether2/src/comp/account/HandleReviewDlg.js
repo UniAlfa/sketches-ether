@@ -6,26 +6,29 @@ import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText/DialogContentText";
 import LinearProgress from "@material-ui/core/LinearProgress/LinearProgress";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
+import TextField from "@material-ui/core/TextField/TextField";
 
 export class HandleReviewDlg extends React.Component {
 
     constructor(props, context) {
         super(props, context);
 
-        this.state = {opened: this.props.opened ? this.props.opened : false, error:undefined, processing:false}
+        this.state = {opened: this.props.opened ? this.props.opened : false, form: {balance: this.props.account ? this.props.account.balance : ''}, error:undefined, processing:false}
         this.handleOpen = this.handleOpen.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleDecision= this.handleDecision.bind(this);
+        this.handleChange= this.handleChange.bind(this);
     }
 
     componentWillReceiveProps (nextProps){
         this.setState (nextProps);
+        this.setState({form: {balance: nextProps.account.balance}})
     }
 
     handleDecision=(decision) => {
         if (this.props.handleDecision) {
             this.setState({processing:true});
-            this.props.handleDecision(this.state.account, decision)
+            this.props.handleDecision(this.state.account, this.state.form.balance, decision)
                 .then(ret => {this.setState({error: undefined, processing:false}); this.handleClose();})
                 .catch(reason => {
                 console.log('Произошла ошибка [' + reason.message + ']');
@@ -42,6 +45,11 @@ export class HandleReviewDlg extends React.Component {
         this.setState({ opened: false });
     };
 
+    handleChange = name => event => {
+        let _form = { ...this.state.form, ...{ [name]: event.target.value }};
+
+        this.setState({ form: _form });
+    };
 
     render() {
         return (
@@ -55,16 +63,25 @@ export class HandleReviewDlg extends React.Component {
                 >
                     <DialogTitle id="form-dialog-title">Верификация</DialogTitle>
                     { (this.props.account && this.props.account.active) ?
-                        <a href={this.props.account.active.url} target={'_blank'}>
                             <DialogContent>
                                 <DialogContentText>
                                     Подтвердить начисление?
                                 </DialogContentText>
+                                <TextField
+                                    margin="dense"
+                                    id="address"
+                                    label={this.state.error ? "Начисление - " + this.state.error : "Начисление"}
+                                    error={this.state.error ? true : undefined}
+                                    onChange={this.handleChange('balance')}
+                                    type="number"
+                                    fullWidth
+                                    value={this.state.form.balance}
+                                />
 
-                                <iframe src={this.props.account.active.url}
-                                        style={{minHeight: '300px', width: '100%'}}/>
+                                <a href={this.props.account.active.url} target={'_blank'}>
+                                    <iframe src={this.props.account.active.url}  style={{minHeight: '300px', width: '100%'}}/>
+                                </a>
                             </DialogContent>
-                        </a>
                         : undefined
                     }
                     {this.state.processing

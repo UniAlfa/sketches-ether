@@ -88,7 +88,7 @@ export class NewAccountDlg extends React.Component {
                         />
                         <TextField
                             margin="dense"
-                            id="address"
+                            id="balance"
                             label={this.state.error ? "Баланс - " + this.state.error : "Баланс"}
                             error={this.state.error ? true : undefined}
                             onChange={this.handleChange('balance')}

@@ -27,8 +27,10 @@ export default class AuthProcess {
     }
 
     setToken(userName, idToken) {
-        localStorage.setItem('atoken', idToken)
-        localStorage.setItem('aname', userName);
+        localStorage.setItem('atoken', idToken);
+        if (idToken) {
+            localStorage.setItem('aname', userName);
+        }
     }
 
     getToken() {

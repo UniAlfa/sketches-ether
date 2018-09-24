@@ -2,8 +2,19 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from "@material-ui/core/Paper/Paper";
+import AuthProcess from "../shared/auth/AuthProcess";
+
+const Auth = new AuthProcess();
 
 class HomePage extends React.Component {
+
+    componentWillMount(){
+        if(Auth.loggedIn())
+            this.props.history.replace('/admin');
+        else
+            this.props.history.replace('/accounts');
+    }
+
     render() {
 
         return (

@@ -69,12 +69,11 @@ export class ManageAccountsPage extends React.Component {
         }
     };
 
-    handleDecision(account, decision): Promise {
-        console.log('handleDecision 2');
+    handleDecision(account, sum, decision): Promise {
         let _that = this;
         if (account) {
             return new Promise(function (resolve, reject) {
-                let aprdec = {username: account.username, decision: decision};
+                let aprdec = {username: account.username, decision: decision, sum: sum};
 
                 Auth.fetch(shconfig.data_rest_api_approval, {
                     crossDomain:true,
