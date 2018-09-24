@@ -18,7 +18,8 @@ export class AccountListPage extends React.Component {
   searchProcess = () => {};
 
   componentDidMount() {
-    this.estimateWallets().then(c => this.setState({ walCount: c }));
+    this.setState ({ walCount: 1000 });
+    //this.estimateWallets().then(c => this.setState({ walCount: c }));
   }
 
   estimateWallets(): Promise {
