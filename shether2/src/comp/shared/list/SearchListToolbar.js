@@ -2,12 +2,12 @@ import Toolbar from "@material-ui/core/Toolbar/Toolbar";
 import React from "react";
 import Typography from "@material-ui/core/Typography/Typography";
 import TextField from "@material-ui/core/TextField/TextField";
-import MuiThemeProvider from "@material-ui/core/es/styles/MuiThemeProvider";
+import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import InputAdornment from "@material-ui/core/InputAdornment/InputAdornment";
-import {lighten} from "@material-ui/core/es/styles/colorManipulator";
-import withStyles from "@material-ui/core/es/styles/withStyles";
+import {lighten} from "@material-ui/core/styles/colorManipulator";
+import withStyles from "@material-ui/core/styles/withStyles";
 import SearchIcon from "@material-ui/icons/Search";
-import createMuiTheme from "@material-ui/core/es/styles/createMuiTheme";
+import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 
 
 const toolbarStyles = theme => ({

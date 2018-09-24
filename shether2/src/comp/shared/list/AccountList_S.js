@@ -36,7 +36,7 @@ export class AccountList extends React.Component<> {
         let _that = this;
         return new Promise(function (resolve, reject) {
             _that.setState({processing:true});
-            Auth.fetch(shconfig.mongo_api_accounts_crud_url)
+            Auth.fetch(shconfig.mongo_api_accounts_crud_url, {crossDomain:true})
                 .then(response =>
                     {
                         return response.json();}

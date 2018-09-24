@@ -7,7 +7,6 @@ import DialogContentText from "@material-ui/core/DialogContentText/DialogContent
 import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
 import LinearProgress from '@material-ui/core/LinearProgress';
-import AddIcon from '@material-ui/icons/Add';
 
 
 export class NewAccountDlg extends React.Component {

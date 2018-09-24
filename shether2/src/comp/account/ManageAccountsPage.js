@@ -45,6 +45,7 @@ export class ManageAccountsPage extends React.Component {
 
                         Auth.fetch(shconfig.mongo_api_accounts_crud_url, {
                             method: 'POST',
+                            crossDomain:true,
                             body: JSON.stringify( account )
                         })
                             .then(response => {
@@ -76,6 +77,7 @@ export class ManageAccountsPage extends React.Component {
                 let aprdec = {username: account.username, decision: decision};
 
                 Auth.fetch(shconfig.data_rest_api_approval, {
+                    crossDomain:true,
                     method: 'POST',
                     body: JSON.stringify(aprdec)
                 })

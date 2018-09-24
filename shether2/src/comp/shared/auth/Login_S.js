@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import AuthProcess from './AuthProcess';
-import TextField from "@material-ui/core/TextField/TextField";
 import Button from "@material-ui/core/Button/Button";
 import Avatar from "@material-ui/core/Avatar/Avatar";
 import Paper from "@material-ui/core/Paper/Paper";
