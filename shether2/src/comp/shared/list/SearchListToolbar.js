@@ -17,6 +17,9 @@ const toolbarStyles = theme => ({
     root: {
         paddingRight: theme.spacing.unit
     },
+    root: {
+        color: "#fff !important"
+    },
     highlight:
         theme.palette.type === "light"
             ? {
@@ -28,13 +31,13 @@ const toolbarStyles = theme => ({
                 backgroundColor: theme.palette.secondary.dark
             },
     spacer: {
-        flex: "1 1 100%"
+        flex: "1 1 100%",
     },
     actions: {
         color: theme.palette.text.secondary
     },
     title: {
-        flex: "0 0 auto"
+        flex: "0 0 auto",
     }
 });
 
@@ -59,7 +62,7 @@ let SearchListToolbar = props => {
                         id="tableTitle"
                         style={{ color: "#fff", fontSize: "0.9rem" }}
                     >
-                            <IconButton color="primary" component="span" onClick={handleRefresh}>
+                            <IconButton style={{ color: "#fff", fontSize: "0.9rem" }} component="span" onClick={handleRefresh}>
                                 <RefreshIcon/>
                             </IconButton>
                     </Typography>
@@ -73,7 +76,7 @@ let SearchListToolbar = props => {
                         id="search"
                         label="Поиск"
                         type="search"
-                        className={''}
+                        className={'search__container'}
                         onChange={handleSearch}
                         margin="normal"
                         InputProps={{

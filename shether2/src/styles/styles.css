@@ -1,3 +1,13 @@
+a:link,
+a:visited {
+    color: #0074D9;
+    text-decoration: none;
+}
+
+a:hover,
+a:active {
+    color: #000;
+}
 
 .sketch-list {
     width: 100%;
@@ -9,10 +19,26 @@
     width: 100%;
     margin-top: 3px;
     overflow-x: auto;
+    margin: auto;
+    marginTop: 1rem;
+    marginBottom: 2rem;
+    max-width: 1400px;    
+
+}
+
+@media screen and (min-width: 600px) {
+    .sketch-paper {
+        margin-top: 3px;
+        overflow-x: auto;
+        /* width: 92%; */
+        margin: auto;
+        marginTop: 1rem;
+        marginBottom: 2rem;
+    }
 }
 
 .sketch-table {
-    min-width: 700px;
+    /* min-width: 700px; */
 }
 
 
@@ -31,10 +57,138 @@
     font-size: 14px;
 }
 
+@media screen and (max-width: 599px) {
+    .sketch-tbody {
+        padding: 5px !important;
+    }
+}
+
+@media screen and (max-width: 599px) {
+    .sketch-tbody button {
+        padding: 5px !important;
+        min-width: auto;
+    }
+}
+
 .sketch-card {
     max-width: 500px;
 }
 
 .sketch-media {
     height: 130px;
+}
+
+.sketch-row th {}
+
+@media screen and (max-width: 599px) {
+    .sketch-row th {
+        padding: 3px !important;
+        min-width: auto;
+    }
+}
+
+.search__container label,
+.search__container input::after {
+    color: #fff !important;
+}
+
+.toolbar {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.header,
+.toolbar {
+  background-color: #fff !important;
+}
+
+h1 {
+    color: #3eac51 !important;
+    font-size: 1.6rem !important;
+}
+
+@media screen and (max-width: 599px) {
+    .hello__user {
+        display: none !important;
+    }
+
+    .toolbar {
+        padding-right: 0 !important;
+    }
+}
+
+.cards-container {
+    background-color: #8b93b3;
+    padding: 0.1rem;
+}
+
+.cards {
+    /* display: flex;
+    align-content: center;
+    justify-content: space-between; */
+    max-width: 900px;
+    margin: 1.5rem auto;
+}
+
+.swiper-pagination-bullet-active {
+    background: #fff;
+}
+
+@media screen and (max-width: 599px) {
+    .cards {
+        width: 70%;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+        align-content: center;
+        margin-bottom: 0;
+
+    }
+
+    .swiper-container {
+        padding-bottom: 1.5rem;
+    }
+
+}
+
+@media screen and (min-width: 600px) {
+    .cards {
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+        align-content: center;
+    }
+
+
+    .card-unit:hover {
+        transform: translate3d(0, -5px, 0);
+    }
+
+    .swiper-pagination-bullet-active {
+        display: none;
+    }
+}
+
+.card-unit {
+    /* width: 25%; */
+    /* min-width: 200px; */
+    height: 100%;
+    transition: all .2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+.cards div div:nth-child(even) div button div {
+    background-size: 100px;
+}
+
+.card-unit button {
+    width: 100%;
+}
+
+
+.swiper-pagination-fraction,
+.swiper-pagination-custom,
+.swiper-container-horizontal>.swiper-pagination-bullets {
+    bottom: 2px;
 }

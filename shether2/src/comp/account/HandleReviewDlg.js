@@ -56,7 +56,7 @@ export class HandleReviewDlg extends React.Component {
             <div className="btn-pane">
                 <Dialog
                     scroll={"body"}
-                    fullWidth={true}
+                    // fullWidth={true}
                     open={this.state.opened}
                     onClose={this.handleClose}
                     aria-labelledby="form-dialog-title"

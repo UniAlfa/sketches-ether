@@ -5,6 +5,24 @@ import Typography from "@material-ui/core/Typography/Typography";
 import { shconfig } from "../../config";
 import Grid from "@material-ui/core/Grid/Grid";
 import Auth from "../shared/auth/AuthProcess";
+import "react-id-swiper/src/styles/css/swiper.css";
+// import SwiperCard from "../shared/swiper";
+import Swiper from "react-id-swiper";
+
+const params = {
+  slidesPerView: 3,
+  spaceBetween: 50,
+  pagination: {
+    el: ".swiper-pagination",
+    clickable: true
+  },
+  breakpoints: {
+    599: {
+      slidesPerView: 1,
+      spaceBetween: 10
+    }
+  }
+};
 
 export class AccountListPage extends React.Component {
   constructor(props, context) {
@@ -22,13 +40,10 @@ export class AccountListPage extends React.Component {
     //this.estimateWallets().then(c => this.setState({ walCount: c }));
   }
 
-
   listRenewed(accounts) {
-      if (accounts) {
-          this.setState ({ walCount: accounts.length});
-      }
-      else
-          this.setState ({ walCount: undefined });
+    if (accounts) {
+      this.setState({ walCount: accounts.length });
+    } else this.setState({ walCount: undefined });
   }
 
   estimateWallets(): Promise {
@@ -60,36 +75,42 @@ export class AccountListPage extends React.Component {
       <div>
         <div className="cards-container">
           <div className="cards">
-            <Grid container spacing={24} style={{ justifyContent: "center" }}>
-              <Grid item xs={8} sm={4}>
+            <Swiper {...params}>
+              <div>
                 <InfoCard
                   count={5000}
                   imageUrl={"/images/card-members.jpg"}
                   title={"Участников форума"}
-                  cardStyle={{ backgroundColor: "#f6ebcd" }}
+                  cardStyle={{
+                    backgroundColor: "#f6ebcd",
+                    textAlign: "center"
+                  }}
                 />
-              </Grid>
-              <Grid item xs={8} sm={4}>
+              </div>
+              <div>
                 <InfoCard
                   count={this.state.walCount}
                   imageUrl="images/card-etherium.jpg"
                   title={"Кошельков Ethereum"}
                   cardStyle={{
                     backgroundColor: "#cbc2d2",
-                    backgroundSize: "50%"
+                    backgroundSize: "50%",
+                    textAlign: "center"
                   }}
                 />
-              </Grid>
-
-              <Grid item xs={8} sm={4}>
+              </div>
+              <div>
                 <InfoCard
                   count={500}
                   imageUrl="/images/card-books.jpg"
                   title={"Книг в магазинах Сбербанка"}
-                  cardStyle={{ backgroundColor: "#a1dce4" }}
+                  cardStyle={{
+                    backgroundColor: "#a1dce4",
+                    textAlign: "center"
+                  }}
                 />
-              </Grid>
-            </Grid>
+              </div>
+            </Swiper>
           </div>
         </div>
 
@@ -101,7 +122,7 @@ export class AccountListPage extends React.Component {
           Список счетов
         </Typography>
 
-        <AccountList mode={"short"} listRenewed={this.listRenewed}/>
+        <AccountList mode={"short"} listRenewed={this.listRenewed} />
       </div>
     );
   }

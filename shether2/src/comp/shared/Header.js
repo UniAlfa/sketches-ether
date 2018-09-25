@@ -16,7 +16,6 @@ const Auth = new AuthProcess();
 
 class Header extends React.Component {
 
-
     render() {
 
         return (
@@ -48,13 +47,13 @@ class Header extends React.Component {
 
                                 {Auth.cani('logout')
                                     ? <React.Fragment>
-                                        <Typography variant="button" color="textPrimary" >
+                                        <Typography variant="button" color="textPrimary" className="hello__user">
                                             Hello, {Auth.getUser()}!
                                         </Typography>
                                         <IconButton color="primary">
                                             <AccountCircle />
                                         </IconButton>
-                                        <Button onClick={() => { Auth.logout(); this.props.history.replace('/'); }} >Logout</Button>
+                                        <Button className="btn__logout" onClick={() => { Auth.logout(); this.props.history.replace('/'); }} >Logout</Button>
                                     </React.Fragment>
                                     : <Button onClick={() => { this.props.history.replace('login'); }}>Login</Button>
                                 }

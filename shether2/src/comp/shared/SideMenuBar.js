@@ -25,6 +25,9 @@ const styles = theme => ({
         marginLeft: -12,
         marginRight: 20,
         color: '#3eab51',
+        [theme.breakpoints.down('sm')]: {
+            marginRight: 0,
+          },
     },
     listMenu: {
         width: "100%",
