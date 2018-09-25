@@ -14,8 +14,7 @@ import IconButton from "@material-ui/core/IconButton/IconButton";
 
 const toolbarStyles = theme => ({
     root: {
-        paddingRight: theme.spacing.unit,
-        color: "#fff !important"
+        color: "#fff !important",
     },
     highlight:
         theme.palette.type === "light"

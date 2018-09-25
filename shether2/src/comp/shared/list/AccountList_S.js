@@ -149,11 +149,11 @@ export class AccountList extends React.Component<> {
     render() {
       let _cols = this.props.mode === 'admin' ?
           [
+              { id: 'active', numeric: false, disablePadding: false, label: 'Action' },
               { id: 'username', numeric: false, disablePadding: false, label: 'Номер телефона' },
               { id: 'address', numeric: false, disablePadding: false, label: 'Адрес кошелька' },
               { id: 'balance', numeric: true, disablePadding: false, label: 'Текущий баланс' },
-              { id: 'created', numeric: false, disablePadding: false, label: 'Создан' },
-              { id: 'active', numeric: false, disablePadding: false, label: 'Action' }
+              { id: 'created', numeric: false, disablePadding: false, label: 'Создан' }
           ]
           : [
               { id: 'username', numeric: false, disablePadding: false, label: 'Номер телефона' },
