@@ -12,14 +12,23 @@ export class AccountListPage extends React.Component {
 
     this.searchProcess = this.searchProcess.bind(this);
     this.estimateWallets = this.estimateWallets.bind(this);
+    this.listRenewed = this.listRenewed.bind(this);
     this.state = { walCount: undefined };
   }
 
   searchProcess = () => {};
 
   componentDidMount() {
-    this.setState ({ walCount: 1000 });
     //this.estimateWallets().then(c => this.setState({ walCount: c }));
+  }
+
+
+  listRenewed(accounts) {
+      if (accounts) {
+          this.setState ({ walCount: accounts.length});
+      }
+      else
+          this.setState ({ walCount: undefined });
   }
 
   estimateWallets(): Promise {
@@ -92,7 +101,7 @@ export class AccountListPage extends React.Component {
           Список счетов
         </Typography>
 
-        <AccountList mode={"short"} />
+        <AccountList mode={"short"} listRenewed={this.listRenewed}/>
       </div>
     );
   }

@@ -13,7 +13,7 @@ export class HandleReviewDlg extends React.Component {
     constructor(props, context) {
         super(props, context);
 
-        this.state = {opened: this.props.opened ? this.props.opened : false, form: {balance: this.props.account ? this.props.account.balance : ''}, error:undefined, processing:false}
+        this.state = {opened: this.props.opened ? this.props.opened : false, form: {balance: 500}, error:undefined, processing:false}
         this.handleOpen = this.handleOpen.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleDecision= this.handleDecision.bind(this);
@@ -22,7 +22,7 @@ export class HandleReviewDlg extends React.Component {
 
     componentWillReceiveProps (nextProps){
         this.setState (nextProps);
-        this.setState({form: {balance: nextProps.account.balance}})
+        this.setState({form: {balance: 500}})
     }
 
     handleDecision=(decision) => {
@@ -61,12 +61,16 @@ export class HandleReviewDlg extends React.Component {
                     onClose={this.handleClose}
                     aria-labelledby="form-dialog-title"
                 >
-                    <DialogTitle id="form-dialog-title">Верификация</DialogTitle>
+                    <DialogTitle id="form-dialog-title">{this.props.account ? 'Проверка' : 'Начисление'}</DialogTitle>
                     { (this.props.account && this.props.account.active) ?
                             <DialogContent>
                                 <DialogContentText>
                                     Подтвердить начисление?
+                                    {/*<Button variant="outlined" href={this.props.account.active.url} target={'_blank'}>*/}
+                                        {/*Просмотр картинки*/}
+                                    {/*</Button>*/}
                                 </DialogContentText>
+
                                 <TextField
                                     margin="dense"
                                     id="address"
@@ -78,11 +82,30 @@ export class HandleReviewDlg extends React.Component {
                                     value={this.state.form.balance}
                                 />
 
+
                                 <a href={this.props.account.active.url} target={'_blank'}>
-                                    <iframe src={this.props.account.active.url}  style={{minHeight: '300px', width: '100%'}}/>
+                                    <div style={ {justifyContent: 'center', display:'flex'}}>
+                                        <img src={this.props.account.active.url}  style={{minHeight: '150px', maxHeight: '300px'}}/>
+                                    </div>
                                 </a>
                             </DialogContent>
-                        : undefined
+                        :                             <DialogContent>
+                            <DialogContentText>
+                                Начислить
+                            </DialogContentText>
+
+                            <TextField
+                                margin="dense"
+                                id="address"
+                                label={this.state.error ? "Начисление - " + this.state.error : "Начисление"}
+                                error={this.state.error ? true : undefined}
+                                onChange={this.handleChange('balance')}
+                                type="number"
+                                fullWidth
+                                value={this.state.form.balance}
+                            />
+                        </DialogContent>
+
                     }
                     {this.state.processing
                         ?

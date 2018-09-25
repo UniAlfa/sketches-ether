@@ -8,6 +8,9 @@ import {lighten} from "@material-ui/core/styles/colorManipulator";
 import withStyles from "@material-ui/core/styles/withStyles";
 import SearchIcon from "@material-ui/icons/Search";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
+import Button from "@material-ui/core/Button/Button";
+import RefreshIcon from "@material-ui/icons/Refresh";
+import IconButton from "@material-ui/core/IconButton/IconButton";
 
 
 const toolbarStyles = theme => ({
@@ -38,7 +41,7 @@ const toolbarStyles = theme => ({
 const theme = createMuiTheme({});
 
 let SearchListToolbar = props => {
-    const { numSelected, classes, handleSearch } = props;
+    const { numSelected, classes, handleSearch, handleRefresh } = props;
 
     return (
         <Toolbar
@@ -56,7 +59,9 @@ let SearchListToolbar = props => {
                         id="tableTitle"
                         style={{ color: "#fff", fontSize: "0.9rem" }}
                     >
-                        Онлайн-таблица
+                            <IconButton color="primary" component="span" onClick={handleRefresh}>
+                                <RefreshIcon/>
+                            </IconButton>
                     </Typography>
                 )}
             </div>

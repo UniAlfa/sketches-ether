@@ -7,6 +7,8 @@ import moment from "moment";
 import Typography from "@material-ui/core/Typography/Typography";
 import AuthProcess from "../shared/auth/AuthProcess";
 import {HandleReviewDlg} from "./HandleReviewDlg";
+import Button from "@material-ui/core/Button/Button";
+import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 
 
 const Auth = new AuthProcess();
@@ -18,7 +20,7 @@ export class ManageAccountsPage extends React.Component {
         this.createWallet = this.createWallet.bind(this);
         this.handleReview = this.handleReview.bind(this);
         this.handleDecision = this.handleDecision.bind(this);
-        this.state = {lastUpdate: 0, managedAccount: undefined}
+        this.state = {lastUpdate: 1, managedAccount: undefined}
     }
 
     createWallet(newWallet): Promise {
@@ -71,6 +73,7 @@ export class ManageAccountsPage extends React.Component {
 
     handleDecision(account, sum, decision): Promise {
         let _that = this;
+        console.log(_that.state);
         if (account) {
             return new Promise(function (resolve, reject) {
                 let aprdec = {username: account.username, decision: decision, sum: sum};

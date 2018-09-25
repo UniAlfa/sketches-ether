@@ -24,6 +24,8 @@ export class AccountList extends React.Component<> {
         this.reloadAccountsState = this.reloadAccountsState.bind(this);
         this.filterArray= this.filterArray.bind(this);
         this.handleReview= this.handleReview.bind(this);
+        this.handleRefresh = this.handleRefresh.bind(this);
+        this.refreshme= this.refreshme.bind(this);
         this.state = {data: [], processing:false, order: 'asc', orderBy: 'username', page: 0, rowsPerPage: 10, seacrhQ: ''};
     }
 
@@ -42,6 +44,9 @@ export class AccountList extends React.Component<> {
                         return response.json();}
                 )
                 .then(accounts => {
+                    if (_that.props.listRenewed){
+                        _that.props.listRenewed (accounts);
+                    }
                     return resolve(accounts);
                 })
                 .catch(reason => {
@@ -52,8 +57,23 @@ export class AccountList extends React.Component<> {
         });
     }
 
-    componentDidMount(){
+    refreshme(){
         this.reloadAccountsState().then(accounts => this.setState({data: accounts, processing:false}));
+    }
+
+    componentDidMount(){
+        this.refreshme();
+        if (this.props.mode == 'admin')
+            this.interval = setInterval(() => this.refreshme(), 15000);
+    }
+
+    componentWillUnmount() {
+        if (this.interval)
+            clearInterval(this.interval);
+    }
+
+    handleRefresh(){
+        this.refreshme();
     }
 
     handleRequestSort = (event, property) => {
@@ -102,6 +122,9 @@ export class AccountList extends React.Component<> {
     }
 
     descSort = (a, b, orderBy) => {
+        if (typeof a[orderBy] === 'undefined' || typeof b[orderBy] === 'undefined') {
+            return a[orderBy] === 'undefined' ? (typeof b[orderBy] === 'undefined' ? 0 : 1) : -1;
+        }
 
         let _a = !isNaN(a[orderBy]) ? Number(a[orderBy]): a[orderBy];
         let _b = !isNaN(b[orderBy]) ? Number(b[orderBy]): b[orderBy];
@@ -131,7 +154,7 @@ export class AccountList extends React.Component<> {
             { id: 'address', numeric: false, disablePadding: false, label: 'Адрес кошелька' },
             { id: 'balance', numeric: true, disablePadding: false, label: 'Текущий баланс' },
             { id: 'created', numeric: false, disablePadding: false, label: 'Создан' },
-            { id: 'action', numeric: false, disablePadding: false, label: 'Action' }
+            { id: 'active', numeric: false, disablePadding: false, label: 'Action' }
         ]
             : [
             { id: 'username', numeric: false, disablePadding: false, label: 'Номер телефона' },
@@ -156,7 +179,7 @@ export class AccountList extends React.Component<> {
                     </div>
                     : undefined
                 }
-                <SearchListToolbar handleSearch={this.handleSearch} classes={this.props.classes}/>
+                <SearchListToolbar handleSearch={this.handleSearch} handleRefresh={this.handleRefresh} classes={this.props.classes}/>
 
                 <div style={{overflowX: "auto"}}>
                 <Table className={'sketch-table'} aria-labelledby="tableTitle">
