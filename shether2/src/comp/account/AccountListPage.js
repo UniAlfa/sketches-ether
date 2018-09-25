@@ -11,7 +11,7 @@ import Swiper from "react-id-swiper";
 
 const params = {
   slidesPerView: 3,
-  spaceBetween: 50,
+  spaceBetween: 40,
   pagination: {
     el: ".swiper-pagination",
     clickable: true

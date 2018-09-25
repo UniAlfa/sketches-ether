@@ -54,10 +54,16 @@ a:active {
 }
 
 .sketch-tbody {
-    font-size: 14px;
+    font-size: 0.72rem !important;
 }
 
-@media screen and (max-width: 599px) {
+@media screen and (max-width: 960px) {
+    .sketch-tbody {
+        padding: 5px 10px !important;
+    }
+}
+
+@media screen and (max-width: 800px) {
     .sketch-tbody {
         padding: 5px !important;
     }
@@ -80,6 +86,18 @@ a:active {
 
 .sketch-row th {}
 
+@media screen and (max-width: 960px) {
+    .sketch-row th {
+        padding: 5px 10px !important;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .sketch-row th {
+        padding: 5px !important;
+    }
+}
+
 @media screen and (max-width: 599px) {
     .sketch-row th {
         padding: 3px !important;
@@ -101,6 +119,7 @@ a:active {
 .header,
 .toolbar {
   background-color: #fff !important;
+  flex-direction: row !important;
 }
 
 h1 {
@@ -135,22 +154,26 @@ h1 {
     background: #fff;
 }
 
+
 @media screen and (max-width: 599px) {
     .cards {
-        width: 70%;
         justify-content: center;
         text-align: center;
         align-items: center;
         align-content: center;
         margin-bottom: 0;
-
+        width: 70%;
     }
 
     .swiper-container {
         padding-bottom: 1.5rem;
     }
-
 }
+
+
+/* @media screen and (max-width: 800px) {
+    .cards {}
+} */
 
 @media screen and (min-width: 600px) {
     .cards {

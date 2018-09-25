@@ -19,19 +19,7 @@ class Header extends React.Component {
     render() {
 
         return (
-            <div style={{flexGrow: 1}}>
-                <Grid container spacing={24} style={{ justifyContent: "center" }}>
-                    <Grid
-                        item
-                        xs={11}
-                        s={10}
-                        md={11}
-                        style={{
-                            justifyContent: "center",
-                            flexBasis: "100%",
-                            maxWidth: "100%"
-                        }}
-                    >
+            <div>
                         <AppBar position="static" className="header">
                             <Toolbar className="toolbar">
                                 <SideMenuBar />
@@ -43,7 +31,7 @@ class Header extends React.Component {
                                     className="eth-logo"
                                     alt=""
                                 />
-                                <Typography variant="title" style={{flexGrow: 1}} />
+                                <Typography variant="title" className="header__spacer" style={{flexGrow: 1}} />
 
                                 {Auth.cani('logout')
                                     ? <React.Fragment>
@@ -60,8 +48,7 @@ class Header extends React.Component {
 
                             </Toolbar>
                         </AppBar>
-                    </Grid>
-                </Grid>
+
             </div>
 
         );
