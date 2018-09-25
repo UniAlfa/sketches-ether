@@ -5,9 +5,9 @@ import Table from "@material-ui/core/Table/Table";
 import Paper from "@material-ui/core/Paper/Paper";
 import TableHead from "@material-ui/core/TableHead/TableHead";
 import TableBody from "@material-ui/core/TableBody/TableBody";
-import { shconfig } from "../../../config";
-import AuthProcess from "../../shared/auth/AuthProcess";
-import { AccountRow } from "./AccountRow_D";
+import {shconfig} from '../../../config'
+import AuthProcess from '../../shared/auth/AuthProcess';
+import {AccountRow} from './AccountRow_D'
 import LinearProgress from "@material-ui/core/LinearProgress/LinearProgress";
 import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 import TableSortLabel from "@material-ui/core/TableSortLabel/TableSortLabel";
@@ -17,209 +17,148 @@ import SearchListToolbar from "./SearchListToolbar";
 const Auth = new AuthProcess();
 
 export class AccountList extends React.Component<> {
-  constructor(props, context) {
-    super(props, context);
 
-    this.reloadAccountsState = this.reloadAccountsState.bind(this);
-    this.filterArray = this.filterArray.bind(this);
-    this.handleReview = this.handleReview.bind(this);
-    this.handleRefresh = this.handleRefresh.bind(this);
-    this.refreshme = this.refreshme.bind(this);
-    this.state = {
-      data: [],
-      processing: false,
-      order: "asc",
-      orderBy: "username",
-      page: 0,
-      rowsPerPage: 10,
-      seacrhQ: ""
-    };
-  }
+    constructor(props, context) {
+        super(props, context);
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.lastUpdate != nextProps.lastUpdate)
-      this.reloadAccountsState().then(accounts =>
-        this.setState({ data: accounts, processing: false })
-      );
-  }
+        this.reloadAccountsState = this.reloadAccountsState.bind(this);
+        this.filterArray= this.filterArray.bind(this);
+        this.handleReview= this.handleReview.bind(this);
+        this.handleRefresh = this.handleRefresh.bind(this);
+        this.refreshme= this.refreshme.bind(this);
+        this.state = {data: [], processing:false, order: 'asc', orderBy: 'username', page: 0, rowsPerPage: 10, seacrhQ: ''};
+    }
 
-  reloadAccountsState(): Promise {
-    let _that = this;
-    return new Promise(function(resolve, reject) {
-      _that.setState({ processing: true });
-      Auth.fetch(shconfig.mongo_api_accounts_crud_url, { crossDomain: true })
-        .then(response => {
-          return response.json();
-        })
-        .then(accounts => {
-          if (_that.props.listRenewed) {
-            _that.props.listRenewed(accounts);
-          }
-          return resolve(accounts);
-        })
-        .catch(reason => {
-          console.log(reason);
-          _that.setState({ processing: false });
-          reject(reason);
+    componentWillReceiveProps  (nextProps){
+        if (this.props.lastUpdate != nextProps.lastUpdate)
+            this.reloadAccountsState().then(accounts => this.setState({data: accounts, processing:false}));
+    }
+
+    reloadAccountsState(): Promise {
+        let _that = this;
+        return new Promise(function (resolve, reject) {
+            _that.setState({processing:true});
+            Auth.fetch(shconfig.mongo_api_accounts_crud_url, {crossDomain:true})
+                .then(response =>
+                    {
+                        return response.json();}
+                )
+                .then(accounts => {
+                    if (_that.props.listRenewed){
+                        _that.props.listRenewed (accounts);
+                    }
+                    return resolve(accounts);
+                })
+                .catch(reason => {
+                    console.log(reason);
+                    _that.setState({processing:false});
+                    reject(reason);
+                });
         });
-    });
-  }
-
-  refreshme() {
-    this.reloadAccountsState().then(accounts =>
-      this.setState({ data: accounts, processing: false })
-    );
-  }
-
-  componentDidMount() {
-    this.refreshme();
-    if (this.props.mode == "admin")
-      this.interval = setInterval(() => this.refreshme(), 15000);
-  }
-
-  componentWillUnmount() {
-    if (this.interval) clearInterval(this.interval);
-  }
-
-  handleRefresh() {
-    this.refreshme();
-  }
-
-  handleRequestSort = (event, property) => {
-    const orderBy = property;
-    let order = "desc";
-
-    if (this.state.orderBy === property && this.state.order === "desc") {
-      order = "asc";
     }
 
-    this.setState({ order, orderBy });
-  };
-
-  handleChangePage = (event, page) => {
-    this.setState({ page });
-  };
-
-  handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value });
-  };
-
-  filterArray = (array, q, mode) => {
-    if (!q || q.length < 1) return array;
-
-    return array.filter(function(n) {
-      let ql = q.toLowerCase();
-      return (
-        n.username.toLowerCase().indexOf(ql) > -1 ||
-        n.address.toLowerCase().indexOf(ql) > -1 ||
-        n.balance.toLowerCase().indexOf(ql) > -1 ||
-        (mode === "admin" && n.created.toLowerCase().indexOf(ql) > -1)
-      );
-    });
-  };
-
-  stableSort = (array, cmp) => {
-    const stabilizedThis = array.map((el, index) => [el, index]);
-    stabilizedThis.sort((a, b) => {
-      const order = cmp(a[0], b[0]);
-      if (order !== 0) return order;
-      return a[1] - b[1];
-    });
-    return stabilizedThis.map(el => el[0]);
-  };
-
-  getSorting = (order, orderBy) => {
-    return order === "desc"
-      ? (a, b) => this.descSort(a, b, orderBy)
-      : (a, b) => -this.descSort(a, b, orderBy);
-  };
-
-  descSort = (a, b, orderBy) => {
-    if (
-      typeof a[orderBy] === "undefined" ||
-      typeof b[orderBy] === "undefined"
-    ) {
-      return a[orderBy] === "undefined"
-        ? typeof b[orderBy] === "undefined"
-          ? 0
-          : 1
-        : -1;
+    refreshme(){
+        this.reloadAccountsState().then(accounts => this.setState({data: accounts, processing:false}));
     }
 
-    let _a = !isNaN(a[orderBy]) ? Number(a[orderBy]) : a[orderBy];
-    let _b = !isNaN(b[orderBy]) ? Number(b[orderBy]) : b[orderBy];
-
-    if (_b < _a) {
-      return -1;
+    componentDidMount(){
+        this.refreshme();
+        if (this.props.mode == 'admin')
+            this.interval = setInterval(() => this.refreshme(), 15000);
     }
-    if (_b > _a) {
-      return 1;
+
+    componentWillUnmount() {
+        if (this.interval)
+            clearInterval(this.interval);
     }
-    return 0;
-  };
 
-  handleSearch = e => {
-    this.setState({ searchQ: e.target.value });
-  };
+    handleRefresh(){
+        this.refreshme();
+    }
 
-  handleReview = account => {
-    this.props.handleReview(account);
-  };
+    handleRequestSort = (event, property) => {
+        const orderBy = property;
+        let order = 'desc';
 
-  render() {
-    let _cols =
-      this.props.mode === "admin"
-        ? [
-            {
-              id: "active",
-              numeric: false,
-              disablePadding: false,
-              label: "Action"
-            },
-            {
-              id: "username",
-              numeric: false,
-              disablePadding: false,
-              label: "Номер телефона"
-            },
-            {
-              id: "address",
-              numeric: false,
-              disablePadding: false,
-              label: "Адрес кошелька"
-            },
-            {
-              id: "balance",
-              numeric: true,
-              disablePadding: false,
-              label: "Текущий баланс"
-            },
-            {
-              id: "created",
-              numeric: false,
-              disablePadding: false,
-              label: "Создан"
-            }
+        if (this.state.orderBy === property && this.state.order === 'desc') {
+            order = 'asc';
+        }
+
+        this.setState({ order, orderBy });
+    };
+
+    handleChangePage = (event, page) => {
+        this.setState({ page });
+    };
+
+    handleChangeRowsPerPage = event => {
+        this.setState({ rowsPerPage: event.target.value });
+    };
+
+    filterArray = (array, q, mode) => {
+        if (!q || q.length <1)
+            return array;
+
+        return array.filter(function (n) {
+            let ql = q.toLowerCase();
+            return n.username.toLowerCase().indexOf(ql) > -1 || n.address.toLowerCase().indexOf(ql) > -1  || n.balance.toLowerCase().indexOf(ql) > -1
+                || (mode === 'admin' && n.created.toLowerCase().indexOf(ql) > -1);
+        });
+    };
+
+    stableSort = (array, cmp) => {
+
+        const stabilizedThis = array.map((el, index) => [el, index]);
+        stabilizedThis.sort((a, b) => {
+            const order = cmp(a[0], b[0]);
+            if (order !== 0) return order;
+            return a[1] - b[1];
+        });
+        return stabilizedThis.map(el => el[0]);
+    };
+
+    getSorting = (order, orderBy) => {
+        return order === 'desc' ? (a, b) => this.descSort(a, b, orderBy) : (a, b) => -this.descSort(a, b, orderBy);
+    };
+
+    descSort = (a, b, orderBy) => {
+        if (typeof a[orderBy] === 'undefined' || typeof b[orderBy] === 'undefined') {
+            return a[orderBy] === 'undefined' ? (typeof b[orderBy] === 'undefined' ? 0 : 1) : -1;
+        }
+
+        let _a = !isNaN(a[orderBy]) ? Number(a[orderBy]): a[orderBy];
+        let _b = !isNaN(b[orderBy]) ? Number(b[orderBy]): b[orderBy];
+
+        if (_b < _a) {
+            return -1;
+        }
+        if (_b > _a) {
+            return 1;
+        }
+        return 0;
+    };
+
+    handleSearch = (e) => {
+        this.setState({searchQ : e.target.value});
+    };
+
+    handleReview = (account) => {
+        this.props.handleReview(account);
+    };
+
+    render() {
+      let _cols = this.props.mode === 'admin' ?
+          [
+              { id: 'username', numeric: false, disablePadding: false, label: 'Номер телефона' },
+              { id: 'address', numeric: false, disablePadding: false, label: 'Адрес кошелька' },
+              { id: 'balance', numeric: true, disablePadding: false, label: 'Текущий баланс' },
+              { id: 'created', numeric: false, disablePadding: false, label: 'Создан' },
+              { id: 'active', numeric: false, disablePadding: false, label: 'Action' }
           ]
-        : [
-            {
-              id: "username",
-              numeric: false,
-              disablePadding: false,
-              label: "Номер телефона"
-            },
-            {
-              id: "address",
-              numeric: false,
-              disablePadding: false,
-              label: "Адрес кошелька"
-            },
-            {
-              id: "balance",
-              numeric: true,
-              disablePadding: false,
-              label: "Текущий баланс"
-            }
+          : [
+              { id: 'username', numeric: false, disablePadding: false, label: 'Номер телефона' },
+              { id: 'address', numeric: false, disablePadding: false, label: 'Адрес кошелька' },
+              { id: 'balance', numeric: true, disablePadding: false, label: 'Текущий баланс' },
           ];
 
     return (
@@ -266,16 +205,10 @@ export class AccountList extends React.Component<> {
                     this.state.rowsPerPage
                 )
                 .map(n => {
-                  let _hasaction = Auth.cani("approve", n);
-                  return (
-                    <AccountRow
-                      key={n._id["$oid"]}
-                      {...n}
-                      mode={this.props.mode}
-                      hasaction={_hasaction}
-                      handleReview={this.handleReview}
-                    />
-                  );
+                    let _hasaction = Auth.cani('approve', n);
+                    return (
+                        <AccountRow key={n._id['$oid']} {...n} mode={this.props.mode} hasaction={_hasaction} handleReview={this.handleReview}/>
+                    );
                 })}
             </TableBody>
           </Table>
@@ -287,10 +220,10 @@ export class AccountList extends React.Component<> {
           rowsPerPage={this.state.rowsPerPage}
           page={this.state.page}
           backIconButtonProps={{
-            "aria-label": "Предыдущая"
+              'aria-label': 'Предыдущая',
           }}
           nextIconButtonProps={{
-            "aria-label": "Следующая"
+              'aria-label': 'Следующая',
           }}
           onChangePage={this.handleChangePage}
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
@@ -308,7 +241,7 @@ class SortableTableHead extends React.Component {
   };
 
   render() {
-    const { order, orderBy, rowCount } = this.props;
+    const { order, orderBy} = this.props;
 
     return (
       <TableHead>

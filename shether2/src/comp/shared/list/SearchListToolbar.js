@@ -8,16 +8,13 @@ import {lighten} from "@material-ui/core/styles/colorManipulator";
 import withStyles from "@material-ui/core/styles/withStyles";
 import SearchIcon from "@material-ui/icons/Search";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
-import Button from "@material-ui/core/Button/Button";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 
 
 const toolbarStyles = theme => ({
     root: {
-        paddingRight: theme.spacing.unit
-    },
-    root: {
+        paddingRight: theme.spacing.unit,
         color: "#fff !important"
     },
     highlight:
