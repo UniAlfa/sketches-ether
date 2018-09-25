@@ -18,8 +18,8 @@ export class AccountRow extends React.Component {
                     return (
                         <TableRow style={style}>
                             <TableCell className={'sketch-tbody'}><Button variant="outlined" onClick={() => {this.props.handleReview(this.props);}}>{titleBtn}</Button></TableCell>
-                            <TableCell className={'sketch-tbody'}><a href={url} target={'_blank'}>{this.props.address}</a></TableCell>
                             <TableCell className={'sketch-tbody'}>{this.props.username}</TableCell>
+                            <TableCell className={'sketch-tbody'}><a href={url} target={'_blank'}>{this.props.address}</a></TableCell>
                             <TableCell className={'sketch-tbody'} numeric>{this.props.balance}</TableCell>
                             <TableCell className={'sketch-tbody'}>{this.props.created}</TableCell>
                         </TableRow>
